@@ -2,7 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { Module, Controller, Get, Injectable } from '@nestjs/common';
 import * as request from 'supertest';
 import * as nock from 'nock';
-import { TerraModule, InjectTerraLCDClient, LCDClient, Coin } from '../src';
+import {
+  TerraModule,
+  InjectTerraLCDClient,
+  TerraLCDClient,
+  Coin,
+} from '../src';
 import { platforms } from './utils/platforms';
 import { extraWait } from './utils/extraWait';
 import { TERRA_TEST_BASE_URL, TERRA_TEST_CHAIN_ID } from './utils/constants';
@@ -41,7 +46,7 @@ describe('InjectEthersProvider', () => {
         @Injectable()
         class TestService {
           constructor(
-            @InjectTerraLCDClient() private readonly terraClient: LCDClient,
+            @InjectTerraLCDClient() private readonly terraClient: TerraLCDClient,
           ) {}
           async someMethod(): Promise<{ tax: string }> {
             const coin = new Coin('uluna', 200);
@@ -108,7 +113,7 @@ describe('InjectEthersProvider', () => {
         @Controller('/')
         class TestController {
           constructor(
-            @InjectTerraLCDClient() private readonly terraClient: LCDClient,
+            @InjectTerraLCDClient() private readonly terraClient: TerraLCDClient,
           ) {}
           @Get()
           async get() {

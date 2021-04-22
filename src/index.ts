@@ -5,7 +5,7 @@ export { DEFAULT_GAS_PRICE, DEFAULT_GAS_ADJUSTMENT } from './terra.constants';
 export { getTerraToken } from './terra.utils';
 export {
   LCDClientConfig,
-  LCDClient,
+  LCDClient as TerraLCDClient,
   Key,
   MnemonicKey,
   RawKey,
@@ -58,4 +58,6 @@ export {
   TxSearchOptions,
   TxSearchResult,
   Wallet,
+  MsgExecuteContract,
+  isTxError,
 } from '@terra-money/terra.js';

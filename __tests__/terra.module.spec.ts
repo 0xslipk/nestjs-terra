@@ -6,7 +6,7 @@ import * as nock from 'nock';
 import {
   TerraModule,
   InjectTerraLCDClient,
-  LCDClient,
+  TerraLCDClient,
   Coins,
   Coin,
   MnemonicKey,
@@ -50,7 +50,7 @@ describe('Terra Module Initialization', () => {
           class TestController {
             constructor(
               @InjectTerraLCDClient()
-              private readonly terraClient: LCDClient,
+              private readonly terraClient: TerraLCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
@@ -105,7 +105,7 @@ describe('Terra Module Initialization', () => {
           class TestController {
             constructor(
               @InjectTerraLCDClient()
-              private readonly terraClient: LCDClient,
+              private readonly terraClient: TerraLCDClient,
             ) {}
             @Get()
             async get(): Promise<{ accountNumber: string }> {
@@ -164,7 +164,7 @@ describe('Terra Module Initialization', () => {
           class TestController {
             constructor(
               @InjectTerraLCDClient()
-              private readonly terraClient: LCDClient,
+              private readonly terraClient: TerraLCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
@@ -237,7 +237,7 @@ describe('Terra Module Initialization', () => {
           class TestController {
             constructor(
               @InjectTerraLCDClient()
-              private readonly terraClient: LCDClient,
+              private readonly terraClient: TerraLCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
@@ -274,7 +274,7 @@ describe('Terra Module Initialization', () => {
           const app = await NestFactory.create(
             TestModule,
             new PlatformAdapter(),
-            // { logger: false },
+            { logger: false },
           );
           const server = app.getHttpServer();
 
@@ -304,7 +304,7 @@ describe('Terra Module Initialization', () => {
           class TestController {
             constructor(
               @InjectTerraLCDClient()
-              private readonly terraClient: LCDClient,
+              private readonly terraClient: TerraLCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
@@ -349,7 +349,7 @@ describe('Terra Module Initialization', () => {
           const app = await NestFactory.create(
             TestModule,
             new PlatformAdapter(),
-            // { logger: false },
+            { logger: false },
           );
           const server = app.getHttpServer();
 
