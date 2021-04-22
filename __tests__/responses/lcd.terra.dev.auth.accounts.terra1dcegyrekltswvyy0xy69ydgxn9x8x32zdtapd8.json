@@ -1,0 +1,13 @@
+{
+  "height": "0",
+  "result": {
+    "type": "core/Account",
+    "value": {
+      "address": "",
+      "coins": [],
+      "public_key": null,
+      "account_number": "10",
+      "sequence": "1"
+    }
+  }
+}
