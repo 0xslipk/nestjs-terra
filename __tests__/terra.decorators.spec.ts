@@ -4,19 +4,20 @@ import * as request from 'supertest';
 import * as nock from 'nock';
 import {
   TerraModule,
+  TERRA_LCD_BASE_URL,
+  TERRA_TESTNET_CHAIN_ID,
   InjectTerraLCDClient,
   TerraLCDClient,
   Coin,
 } from '../src';
 import { platforms } from './utils/platforms';
 import { extraWait } from './utils/extraWait';
-import { TERRA_TEST_BASE_URL, TERRA_TEST_CHAIN_ID } from './utils/constants';
 import {
   treasuryTaxCapUlunaResponse,
   treasuryTaxRateResponse,
 } from './responses';
 
-describe('InjectEthersProvider', () => {
+describe('InjectTerraLCDClient', () => {
   beforeEach(() => nock.cleanAll());
 
   beforeAll(() => {
@@ -35,7 +36,7 @@ describe('InjectEthersProvider', () => {
   for (const PlatformAdapter of platforms) {
     describe(PlatformAdapter.name, () => {
       it('should inject terra LCD client in a service successfully', async () => {
-        nock(TERRA_TEST_BASE_URL)
+        nock(TERRA_LCD_BASE_URL)
           .get('/treasury/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
@@ -46,7 +47,8 @@ describe('InjectEthersProvider', () => {
         @Injectable()
         class TestService {
           constructor(
-            @InjectTerraLCDClient() private readonly terraClient: TerraLCDClient,
+            @InjectTerraLCDClient()
+            private readonly terraClient: TerraLCDClient,
           ) {}
           async someMethod(): Promise<{ tax: string }> {
             const coin = new Coin('uluna', 200);
@@ -68,8 +70,8 @@ describe('InjectEthersProvider', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: TERRA_TEST_BASE_URL,
-              chainID: TERRA_TEST_CHAIN_ID,
+              URL: TERRA_LCD_BASE_URL,
+              chainID: TERRA_TESTNET_CHAIN_ID,
             }),
           ],
           controllers: [TestController],
@@ -102,7 +104,7 @@ describe('InjectEthersProvider', () => {
       });
 
       it('should inject terra LCD client in a controller successfully', async () => {
-        nock(TERRA_TEST_BASE_URL)
+        nock(TERRA_LCD_BASE_URL)
           .get('/treasury/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
@@ -113,7 +115,8 @@ describe('InjectEthersProvider', () => {
         @Controller('/')
         class TestController {
           constructor(
-            @InjectTerraLCDClient() private readonly terraClient: TerraLCDClient,
+            @InjectTerraLCDClient()
+            private readonly terraClient: TerraLCDClient,
           ) {}
           @Get()
           async get() {
@@ -127,8 +130,8 @@ describe('InjectEthersProvider', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: TERRA_TEST_BASE_URL,
-              chainID: TERRA_TEST_CHAIN_ID,
+              URL: TERRA_LCD_BASE_URL,
+              chainID: TERRA_TESTNET_CHAIN_ID,
             }),
           ],
           controllers: [TestController],
