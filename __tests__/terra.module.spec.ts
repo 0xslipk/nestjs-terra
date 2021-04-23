@@ -5,6 +5,8 @@ import * as request from 'supertest';
 import * as nock from 'nock';
 import {
   TerraModule,
+  TERRA_LCD_BASE_URL,
+  TERRA_TESTNET_CHAIN_ID,
   InjectTerraLCDClient,
   TerraLCDClient,
   Coins,
@@ -13,12 +15,7 @@ import {
 } from '../src';
 import { platforms } from './utils/platforms';
 import { extraWait } from './utils/extraWait';
-import {
-  TERRA_TEST_BASE_URL,
-  TERRA_TEST_CHAIN_ID,
-  TERRA_ADDRESS,
-  TERRA_MNEMONIC,
-} from './utils/constants';
+import { TERRA_ADDRESS, TERRA_MNEMONIC } from './utils/constants';
 import { supplyTotalResponse, authAccounteResponse } from './responses';
 
 describe('Terra Module Initialization', () => {
@@ -42,7 +39,7 @@ describe('Terra Module Initialization', () => {
     describe(PlatformAdapter.name, () => {
       describe('forRoot', () => {
         it('should work with terra testnet client', async () => {
-          nock(TERRA_TEST_BASE_URL)
+          nock(TERRA_LCD_BASE_URL)
             .get('/supply/total')
             .reply(200, supplyTotalResponse);
 
@@ -64,8 +61,8 @@ describe('Terra Module Initialization', () => {
           @Module({
             imports: [
               TerraModule.forRoot({
-                URL: TERRA_TEST_BASE_URL,
-                chainID: TERRA_TEST_CHAIN_ID,
+                URL: TERRA_LCD_BASE_URL,
+                chainID: TERRA_TESTNET_CHAIN_ID,
               }),
             ],
             controllers: [TestController],
@@ -97,7 +94,7 @@ describe('Terra Module Initialization', () => {
         });
 
         it('should work with a wallet key', async () => {
-          nock(TERRA_TEST_BASE_URL)
+          nock(TERRA_LCD_BASE_URL)
             .get(`/auth/accounts/${TERRA_ADDRESS}`)
             .reply(200, authAccounteResponse);
 
@@ -121,8 +118,8 @@ describe('Terra Module Initialization', () => {
           @Module({
             imports: [
               TerraModule.forRoot({
-                URL: TERRA_TEST_BASE_URL,
-                chainID: TERRA_TEST_CHAIN_ID,
+                URL: TERRA_LCD_BASE_URL,
+                chainID: TERRA_TESTNET_CHAIN_ID,
               }),
             ],
             controllers: [TestController],
@@ -156,7 +153,7 @@ describe('Terra Module Initialization', () => {
 
       describe('forRootAsync', () => {
         it('should compile properly with useFactory', async () => {
-          nock(TERRA_TEST_BASE_URL)
+          nock(TERRA_LCD_BASE_URL)
             .get('/supply/total')
             .reply(200, supplyTotalResponse);
 
@@ -177,8 +174,8 @@ describe('Terra Module Initialization', () => {
 
           @Injectable()
           class ConfigService {
-            public readonly URL = TERRA_TEST_BASE_URL;
-            public readonly chainID = TERRA_TEST_CHAIN_ID;
+            public readonly URL = TERRA_LCD_BASE_URL;
+            public readonly chainID = TERRA_TESTNET_CHAIN_ID;
           }
 
           @Module({
@@ -229,7 +226,7 @@ describe('Terra Module Initialization', () => {
         });
 
         it('should work properly when pass dependencies via providers', async () => {
-          nock(TERRA_TEST_BASE_URL)
+          nock(TERRA_LCD_BASE_URL)
             .get('/supply/total')
             .reply(200, supplyTotalResponse);
 
@@ -250,8 +247,8 @@ describe('Terra Module Initialization', () => {
 
           @Injectable()
           class ConfigService {
-            public readonly URL = TERRA_TEST_BASE_URL;
-            public readonly chainID = TERRA_TEST_CHAIN_ID;
+            public readonly URL = TERRA_LCD_BASE_URL;
+            public readonly chainID = TERRA_TESTNET_CHAIN_ID;
           }
 
           @Module({
@@ -296,7 +293,7 @@ describe('Terra Module Initialization', () => {
         });
 
         it('should work properly when useFactory returns Promise', async () => {
-          nock(TERRA_TEST_BASE_URL)
+          nock(TERRA_LCD_BASE_URL)
             .get('/supply/total')
             .reply(200, supplyTotalResponse);
 
@@ -317,8 +314,8 @@ describe('Terra Module Initialization', () => {
 
           @Injectable()
           class ConfigService {
-            public readonly URL = TERRA_TEST_BASE_URL;
-            public readonly chainID = TERRA_TEST_CHAIN_ID;
+            public readonly URL = TERRA_LCD_BASE_URL;
+            public readonly chainID = TERRA_TESTNET_CHAIN_ID;
           }
 
           @Module({

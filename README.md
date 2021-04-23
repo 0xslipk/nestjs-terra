@@ -27,12 +27,16 @@ npm i nestjs-terra
 ```ts
 interface TerraModuleOptions {
   /**
-   * The base URL to which LCD requests will be made.
+   * The base URL to wich Light Client Daemon (LCD) requests will be made.
+   * For example: https://lcd.terra.dev
    */
   URL: string;
 
   /**
    * Chain ID of the blockchain to connect to.
+   * For example:
+   *  - columbus-4: Mainnet
+   *  - tequila-0004: Testnet
    */
   chainID: string;
 
@@ -53,13 +57,17 @@ interface TerraModuleOptions {
 Use `TerraModule.forRoot` method with [Options interface](#configuration-params):
 
 ```ts
-import { TerraModule } from 'nestjs-terra';
+import {
+  TerraModule,
+  TERRA_LCD_BASE_URL,
+  TERRA_MAINNET_CHAIN_ID
+} from 'nestjs-terra';
 
 @Module({
   imports: [
     TerraModule.forRoot({
-      URL: 'https://lcd.terra.dev',
-      chainID: 'columbus-4',
+      URL: TERRA_LCD_BASE_URL,
+      chainID: TERRA_MAINNET_CHAIN_ID,
     })
   ],
   ...
@@ -76,12 +84,16 @@ With `TerraModule.forRootAsync` you can, for example, import your `ConfigModule`
 Here's an example:
 
 ```ts
-import { TerraModule } from 'nestjs-terra';
+import {
+  TerraModule,
+  TERRA_LCD_BASE_URL,
+  TERRA_MAINNET_CHAIN_ID
+} from 'nestjs-terra';
 
 @Injectable()
 class ConfigService {
-  public readonly URL = 'https://lcd.terra.dev';
-  public readonly chainID = 'columbus-4';
+  public readonly URL = TERRA_LCD_BASE_URL;
+  public readonly chainID = TERRA_MAINNET_CHAIN_ID;
 }
 
 @Module({
@@ -112,12 +124,16 @@ class MyModule {}
 Or you can just pass `ConfigService` to `providers`, if you don't have any `ConfigModule`:
 
 ```ts
-import { TerraModule } from 'nestjs-terra';
+import {
+  TerraModule,
+  TERRA_LCD_BASE_URL,
+  TERRA_MAINNET_CHAIN_ID,
+} from 'nestjs-terra';
 
 @Injectable()
 class ConfigService {
-  public readonly URL = 'https://lcd.terra.dev';
-  public readonly chainID = 'columbus-4';
+  public readonly URL = TERRA_LCD_BASE_URL;
+  public readonly chainID = TERRA_MAINNET_CHAIN_ID;
 }
 
 @Module({
