@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/04/26**
+- [#6](https://github.com/jarcodallo/nestjs-terra/pull/6) Expose Tequila Base Url
+
 ## 0.1.0
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/04/23**
 - [#3](https://github.com/jarcodallo/nestjs-terra/pull/3) Release v0.1.0 - TerraModule implementation
