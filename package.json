@@ -1,6 +1,6 @@
 {
   "name": "nestjs-terra",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Terra blockchain utilities for NestJS based on terra.js",
   "author": "Jose Ramirez <jarcodallo@gmail.com>",
   "license": "Apache",
