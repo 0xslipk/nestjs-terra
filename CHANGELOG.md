@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.1.1
+## 0.1.3
+Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/06/28**
+- [#6](https://github.com/jarcodallo/nestjs-terra/pull/60) Update dependencies
+
+## 0.1.2
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/04/26**
 - [#6](https://github.com/jarcodallo/nestjs-terra/pull/6) Expose Tequila Base Url
 
