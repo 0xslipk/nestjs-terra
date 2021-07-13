@@ -1,4 +1,4 @@
-import { defer } from 'rxjs';
+import { defer, lastValueFrom } from 'rxjs';
 import { Provider } from '@nestjs/common';
 import { LCDClient as TerraLCDClient } from '@terra-money/terra.js';
 import { TerraModuleOptions, TerraModuleAsyncOptions } from './terra.interface';
@@ -33,7 +33,7 @@ export function createTerraProvider(options: TerraModuleOptions): Provider {
   return {
     provide: getTerraToken(),
     useFactory: async (): Promise<TerraLCDClient> => {
-      return await defer(() => createLCDClient(options)).toPromise();
+      return await lastValueFrom(defer(() => createLCDClient(options)));
     },
   };
 }
@@ -44,7 +44,7 @@ export function createTerraAsyncProvider(): Provider {
     useFactory: async (
       options: TerraModuleOptions,
     ): Promise<TerraLCDClient> => {
-      return await defer(() => createLCDClient(options)).toPromise();
+      return await lastValueFrom(defer(() => createLCDClient(options)));
     },
     inject: [TERRA_MODULE_OPTIONS],
   };
