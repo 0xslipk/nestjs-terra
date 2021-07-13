@@ -215,7 +215,7 @@ Using this token, you can easily provide a mock implementation of the `TerraLCDC
     providers: [
       MyService,
       {
-        provide: getTerraToken(MyService.name),
+        provide: getTerraToken(),
         useValue: mockProvider,
       },
     ],
