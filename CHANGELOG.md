@@ -2,7 +2,7 @@
 
 ## 0.1.5
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
-- [#77](https://github.com/jarcodallo/nestjs-terra/pull/77) Update terra.js dependency
+- [#85](https://github.com/jarcodallo/nestjs-terra/pull/85) Update terra.js dependency
 
 ## 0.1.4
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/07/13**
