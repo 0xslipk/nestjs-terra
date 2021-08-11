@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
+- [#85](https://github.com/jarcodallo/nestjs-terra/pull/85) Update terra.js dependency
+
 ## 0.1.4
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/07/13**
 - [#77](https://github.com/jarcodallo/nestjs-terra/pull/77) Update dependencies
