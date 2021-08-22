@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0
+Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
+- [#89](https://github.com/jarcodallo/nestjs-terra/pull/89) Terrajs columbus-5 compatibility
+
+### BREAKING CHANGE
+- Update terra.js from `1.8.9` to `2.0.2` (columbus-5).
+- Renamed constant from `TERRA_LCD_BASE_URL` to `MAINNET_LCD_BASE_URL`.
+- Renamed constant from `TERRA_TESTNET_LCD_BASE_URL` to `TESTNET_LCD_BASE_URL`.
+- Renamed constant from `TERRA_MAINNET_CHAIN_ID` to `MAINNET_CHAIN_ID`.
+- Renamed constant from `TERRA_TESTNET_CHAIN_ID` to `MAINNET_CHAIN_ID`.
+
 ## 0.1.5
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
 - [#85](https://github.com/jarcodallo/nestjs-terra/pull/85) Update terra.js dependency

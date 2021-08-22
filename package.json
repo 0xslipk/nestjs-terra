@@ -46,8 +46,7 @@
   "homepage": "https://github.com/jarcodallo/nestjs-terra/blob/main/README.md",
   "bugs": "https://github.com/jarcodallo/nestjs-terra/issues",
   "dependencies": {
-    "@terra-money/terra.js": "2.0.2",
-    "pre-commit": "^1.2.2"
+    "@terra-money/terra.js": "2.0.2"
   },
   "devDependencies": {
     "@nestjs/common": "^8.0.6",
@@ -67,6 +66,7 @@
     "jest": "^27.0.6",
     "nock": "^13.1.2",
     "prettier": "^2.3.2",
+    "pre-commit": "^1.2.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.3.0",
     "supertest": "^6.1.6",
