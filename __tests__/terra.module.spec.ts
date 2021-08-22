@@ -5,8 +5,8 @@ import * as request from 'supertest';
 import * as nock from 'nock';
 import {
   TerraModule,
-  TERRA_LCD_BASE_URL,
-  TERRA_TESTNET_CHAIN_ID,
+  MAINNET_LCD_BASE_URL,
+  TESTNET_LCD_BASE_URL,
   InjectTerraLCDClient,
   TerraLCDClient,
   Coins,
@@ -39,8 +39,8 @@ describe('Terra Module Initialization', () => {
     describe(PlatformAdapter.name, () => {
       describe('forRoot', () => {
         it('should work with terra testnet client', async () => {
-          nock(TERRA_LCD_BASE_URL)
-            .get('/supply/total')
+          nock(MAINNET_LCD_BASE_URL)
+            .get('/bank/total')
             .reply(200, supplyTotalResponse);
 
           @Controller('/')
@@ -61,8 +61,8 @@ describe('Terra Module Initialization', () => {
           @Module({
             imports: [
               TerraModule.forRoot({
-                URL: TERRA_LCD_BASE_URL,
-                chainID: TERRA_TESTNET_CHAIN_ID,
+                URL: MAINNET_LCD_BASE_URL,
+                chainID: TESTNET_LCD_BASE_URL,
               }),
             ],
             controllers: [TestController],
@@ -86,7 +86,7 @@ describe('Terra Module Initialization', () => {
               expect(res.body).toBeDefined();
               expect(res.body).toHaveProperty(
                 'luna',
-                supplyTotalResponse.result[0].amount,
+                supplyTotalResponse.result.supply[0].amount,
               );
             });
 
@@ -94,7 +94,7 @@ describe('Terra Module Initialization', () => {
         });
 
         it('should work with a wallet key', async () => {
-          nock(TERRA_LCD_BASE_URL)
+          nock(MAINNET_LCD_BASE_URL)
             .get(`/auth/accounts/${TERRA_ADDRESS}`)
             .reply(200, authAccounteResponse);
 
@@ -118,8 +118,8 @@ describe('Terra Module Initialization', () => {
           @Module({
             imports: [
               TerraModule.forRoot({
-                URL: TERRA_LCD_BASE_URL,
-                chainID: TERRA_TESTNET_CHAIN_ID,
+                URL: MAINNET_LCD_BASE_URL,
+                chainID: TESTNET_LCD_BASE_URL,
               }),
             ],
             controllers: [TestController],
@@ -153,8 +153,8 @@ describe('Terra Module Initialization', () => {
 
       describe('forRootAsync', () => {
         it('should compile properly with useFactory', async () => {
-          nock(TERRA_LCD_BASE_URL)
-            .get('/supply/total')
+          nock(MAINNET_LCD_BASE_URL)
+            .get('/bank/total')
             .reply(200, supplyTotalResponse);
 
           @Controller('/')
@@ -174,8 +174,8 @@ describe('Terra Module Initialization', () => {
 
           @Injectable()
           class ConfigService {
-            public readonly URL = TERRA_LCD_BASE_URL;
-            public readonly chainID = TERRA_TESTNET_CHAIN_ID;
+            public readonly URL = MAINNET_LCD_BASE_URL;
+            public readonly chainID = TESTNET_LCD_BASE_URL;
           }
 
           @Module({
@@ -218,7 +218,7 @@ describe('Terra Module Initialization', () => {
               expect(res.body).toBeDefined();
               expect(res.body).toHaveProperty(
                 'luna',
-                supplyTotalResponse.result[0].amount,
+                supplyTotalResponse.result.supply[0].amount,
               );
             });
 
@@ -226,8 +226,8 @@ describe('Terra Module Initialization', () => {
         });
 
         it('should work properly when pass dependencies via providers', async () => {
-          nock(TERRA_LCD_BASE_URL)
-            .get('/supply/total')
+          nock(MAINNET_LCD_BASE_URL)
+            .get('/bank/total')
             .reply(200, supplyTotalResponse);
 
           @Controller('/')
@@ -247,8 +247,8 @@ describe('Terra Module Initialization', () => {
 
           @Injectable()
           class ConfigService {
-            public readonly URL = TERRA_LCD_BASE_URL;
-            public readonly chainID = TERRA_TESTNET_CHAIN_ID;
+            public readonly URL = MAINNET_LCD_BASE_URL;
+            public readonly chainID = TESTNET_LCD_BASE_URL;
           }
 
           @Module({
@@ -285,7 +285,7 @@ describe('Terra Module Initialization', () => {
               expect(res.body).toBeDefined();
               expect(res.body).toHaveProperty(
                 'luna',
-                supplyTotalResponse.result[0].amount,
+                supplyTotalResponse.result.supply[0].amount,
               );
             });
 
@@ -293,8 +293,8 @@ describe('Terra Module Initialization', () => {
         });
 
         it('should work properly when useFactory returns Promise', async () => {
-          nock(TERRA_LCD_BASE_URL)
-            .get('/supply/total')
+          nock(MAINNET_LCD_BASE_URL)
+            .get('/bank/total')
             .reply(200, supplyTotalResponse);
 
           @Controller('/')
@@ -314,8 +314,8 @@ describe('Terra Module Initialization', () => {
 
           @Injectable()
           class ConfigService {
-            public readonly URL = TERRA_LCD_BASE_URL;
-            public readonly chainID = TERRA_TESTNET_CHAIN_ID;
+            public readonly URL = MAINNET_LCD_BASE_URL;
+            public readonly chainID = TESTNET_LCD_BASE_URL;
           }
 
           @Module({
@@ -360,7 +360,7 @@ describe('Terra Module Initialization', () => {
               expect(res.body).toBeDefined();
               expect(res.body).toHaveProperty(
                 'luna',
-                supplyTotalResponse.result[0].amount,
+                supplyTotalResponse.result.supply[0].amount,
               );
             });
 

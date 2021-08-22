@@ -4,8 +4,8 @@ import * as request from 'supertest';
 import * as nock from 'nock';
 import {
   TerraModule,
-  TERRA_LCD_BASE_URL,
-  TERRA_TESTNET_CHAIN_ID,
+  MAINNET_LCD_BASE_URL,
+  TESTNET_LCD_BASE_URL,
   InjectTerraLCDClient,
   TerraLCDClient,
   Coin,
@@ -36,7 +36,7 @@ describe('InjectTerraLCDClient', () => {
   for (const PlatformAdapter of platforms) {
     describe(PlatformAdapter.name, () => {
       it('should inject terra LCD client in a service successfully', async () => {
-        nock(TERRA_LCD_BASE_URL)
+        nock(MAINNET_LCD_BASE_URL)
           .get('/treasury/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
@@ -70,8 +70,8 @@ describe('InjectTerraLCDClient', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: TERRA_LCD_BASE_URL,
-              chainID: TERRA_TESTNET_CHAIN_ID,
+              URL: MAINNET_LCD_BASE_URL,
+              chainID: TESTNET_LCD_BASE_URL,
             }),
           ],
           controllers: [TestController],
@@ -104,7 +104,7 @@ describe('InjectTerraLCDClient', () => {
       });
 
       it('should inject terra LCD client in a controller successfully', async () => {
-        nock(TERRA_LCD_BASE_URL)
+        nock(MAINNET_LCD_BASE_URL)
           .get('/treasury/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
@@ -130,8 +130,8 @@ describe('InjectTerraLCDClient', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: TERRA_LCD_BASE_URL,
-              chainID: TERRA_TESTNET_CHAIN_ID,
+              URL: MAINNET_LCD_BASE_URL,
+              chainID: TESTNET_LCD_BASE_URL,
             }),
           ],
           controllers: [TestController],
