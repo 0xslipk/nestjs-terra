@@ -1,60 +1,58 @@
 // import { randomBytes } from 'crypto';
-import { NestFactory } from '@nestjs/core';
-import { Module, Controller, Get, Injectable } from '@nestjs/common';
-import * as request from 'supertest';
-import * as nock from 'nock';
+import { Module, Controller, Get, Injectable } from '@nestjs/common'
+import { NestFactory } from '@nestjs/core'
+import * as nock from 'nock'
+import * as request from 'supertest'
 import {
   TerraModule,
   MAINNET_LCD_BASE_URL,
   TESTNET_LCD_BASE_URL,
-  InjectTerraLCDClient,
-  TerraLCDClient,
+  InjectLCDClient,
+  LCDClient,
   Coins,
   Coin,
   MnemonicKey,
-} from '../src';
-import { platforms } from './utils/platforms';
-import { extraWait } from './utils/extraWait';
-import { TERRA_ADDRESS, TERRA_MNEMONIC } from './utils/constants';
-import { supplyTotalResponse, authAccounteResponse } from './responses';
+} from '../src'
+import { supplyTotalResponse, authAccounteResponse } from './responses'
+import { TERRA_ADDRESS, TERRA_MNEMONIC } from './utils/constants'
+import { extraWait } from './utils/extraWait'
+import { platforms } from './utils/platforms'
 
 describe('Terra Module Initialization', () => {
-  beforeEach(() => nock.cleanAll());
+  beforeEach(() => nock.cleanAll())
 
   beforeAll(() => {
     if (!nock.isActive()) {
-      nock.activate();
+      nock.activate()
     }
 
     // nock.recorder.rec();
-    nock.disableNetConnect();
-    nock.enableNetConnect('127.0.0.1');
-  });
+    nock.disableNetConnect()
+    nock.enableNetConnect('127.0.0.1')
+  })
 
   afterAll(() => {
-    nock.restore();
-  });
+    nock.restore()
+  })
 
   for (const PlatformAdapter of platforms) {
     describe(PlatformAdapter.name, () => {
       describe('forRoot', () => {
         it('should work with terra testnet client', async () => {
-          nock(MAINNET_LCD_BASE_URL)
-            .get('/bank/total')
-            .reply(200, supplyTotalResponse);
+          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total();
-              const uLuna: Coin | undefined = total.get('uluna');
+              const total: Coins = await this.terraClient.supply.total()
+              const uLuna: Coin | undefined = total.get('uluna')
 
-              return { luna: uLuna?.amount?.toString() ?? '0' };
+              return { luna: uLuna?.amount?.toString() ?? '0' }
             }
           }
 
@@ -69,49 +67,38 @@ describe('Terra Module Initialization', () => {
           })
           class TestModule {}
 
-          const app = await NestFactory.create(
-            TestModule,
-            new PlatformAdapter(),
-            { logger: false },
-          );
-          const server = app.getHttpServer();
+          const app = await NestFactory.create(TestModule, new PlatformAdapter(), { logger: false })
+          const server = app.getHttpServer()
 
-          await app.init();
-          await extraWait(PlatformAdapter, app);
+          await app.init()
+          await extraWait(PlatformAdapter, app)
 
           await request(server)
             .get('/')
             .expect(200)
             .expect((res) => {
-              expect(res.body).toBeDefined();
-              expect(res.body).toHaveProperty(
-                'luna',
-                supplyTotalResponse.result.supply[0].amount,
-              );
-            });
+              expect(res.body).toBeDefined()
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+            })
 
-          await app.close();
-        });
+          await app.close()
+        })
 
         it('should work with a wallet key', async () => {
-          nock(MAINNET_LCD_BASE_URL)
-            .get(`/auth/accounts/${TERRA_ADDRESS}`)
-            .reply(200, authAccounteResponse);
+          nock(MAINNET_LCD_BASE_URL).get(`/auth/accounts/${TERRA_ADDRESS}`).reply(200, authAccounteResponse)
 
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ accountNumber: string }> {
-              const wallet = this.terraClient.wallet(
-                new MnemonicKey({ mnemonic: TERRA_MNEMONIC }),
-              );
-              const accountNumber = await wallet.accountNumber();
+              const wallet = this.terraClient.wallet(new MnemonicKey({ mnemonic: TERRA_MNEMONIC }))
+              const accountNumber = await wallet.accountNumber()
 
-              return { accountNumber: accountNumber.toString() };
+              return { accountNumber: accountNumber.toString() }
             }
           }
 
@@ -126,56 +113,47 @@ describe('Terra Module Initialization', () => {
           })
           class TestModule {}
 
-          const app = await NestFactory.create(
-            TestModule,
-            new PlatformAdapter(),
-            { logger: false },
-          );
-          const server = app.getHttpServer();
+          const app = await NestFactory.create(TestModule, new PlatformAdapter(), { logger: false })
+          const server = app.getHttpServer()
 
-          await app.init();
-          await extraWait(PlatformAdapter, app);
+          await app.init()
+          await extraWait(PlatformAdapter, app)
 
           await request(server)
             .get('/')
             .expect(200)
             .expect((res) => {
-              expect(res.body).toBeDefined();
-              expect(res.body).toHaveProperty(
-                'accountNumber',
-                authAccounteResponse.result.value.account_number,
-              );
-            });
+              expect(res.body).toBeDefined()
+              expect(res.body).toHaveProperty('accountNumber', authAccounteResponse.result.value.account_number)
+            })
 
-          await app.close();
-        });
-      });
+          await app.close()
+        })
+      })
 
       describe('forRootAsync', () => {
         it('should compile properly with useFactory', async () => {
-          nock(MAINNET_LCD_BASE_URL)
-            .get('/bank/total')
-            .reply(200, supplyTotalResponse);
+          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total();
-              const uLuna: Coin | undefined = total.get('uluna');
+              const total: Coins = await this.terraClient.supply.total()
+              const uLuna: Coin | undefined = total.get('uluna')
 
-              return { luna: uLuna?.amount?.toString() ?? '0' };
+              return { luna: uLuna?.amount?.toString() ?? '0' }
             }
           }
 
           @Injectable()
           class ConfigService {
-            public readonly URL = MAINNET_LCD_BASE_URL;
-            public readonly chainID = TESTNET_LCD_BASE_URL;
+            public readonly URL = MAINNET_LCD_BASE_URL
+            public readonly chainID = TESTNET_LCD_BASE_URL
           }
 
           @Module({
@@ -193,7 +171,7 @@ describe('Terra Module Initialization', () => {
                   return {
                     URL: config.URL,
                     chainID: config.chainID,
-                  };
+                  }
                 },
               }),
             ],
@@ -201,54 +179,45 @@ describe('Terra Module Initialization', () => {
           })
           class TestModule {}
 
-          const app = await NestFactory.create(
-            TestModule,
-            new PlatformAdapter(),
-            { logger: false },
-          );
-          const server = app.getHttpServer();
+          const app = await NestFactory.create(TestModule, new PlatformAdapter(), { logger: false })
+          const server = app.getHttpServer()
 
-          await app.init();
-          await extraWait(PlatformAdapter, app);
+          await app.init()
+          await extraWait(PlatformAdapter, app)
 
           await request(server)
             .get('/')
             .expect(200)
             .expect((res) => {
-              expect(res.body).toBeDefined();
-              expect(res.body).toHaveProperty(
-                'luna',
-                supplyTotalResponse.result.supply[0].amount,
-              );
-            });
+              expect(res.body).toBeDefined()
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+            })
 
-          await app.close();
-        });
+          await app.close()
+        })
 
         it('should work properly when pass dependencies via providers', async () => {
-          nock(MAINNET_LCD_BASE_URL)
-            .get('/bank/total')
-            .reply(200, supplyTotalResponse);
+          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total();
-              const uLuna: Coin | undefined = total.get('uluna');
+              const total: Coins = await this.terraClient.supply.total()
+              const uLuna: Coin | undefined = total.get('uluna')
 
-              return { luna: uLuna?.amount?.toString() ?? '0' };
+              return { luna: uLuna?.amount?.toString() ?? '0' }
             }
           }
 
           @Injectable()
           class ConfigService {
-            public readonly URL = MAINNET_LCD_BASE_URL;
-            public readonly chainID = TESTNET_LCD_BASE_URL;
+            public readonly URL = MAINNET_LCD_BASE_URL
+            public readonly chainID = TESTNET_LCD_BASE_URL
           }
 
           @Module({
@@ -260,7 +229,7 @@ describe('Terra Module Initialization', () => {
                   return {
                     URL: config.URL,
                     chainID: config.chainID,
-                  };
+                  }
                 },
               }),
             ],
@@ -268,54 +237,45 @@ describe('Terra Module Initialization', () => {
           })
           class TestModule {}
 
-          const app = await NestFactory.create(
-            TestModule,
-            new PlatformAdapter(),
-            { logger: false },
-          );
-          const server = app.getHttpServer();
+          const app = await NestFactory.create(TestModule, new PlatformAdapter(), { logger: false })
+          const server = app.getHttpServer()
 
-          await app.init();
-          await extraWait(PlatformAdapter, app);
+          await app.init()
+          await extraWait(PlatformAdapter, app)
 
           await request(server)
             .get('/')
             .expect(200)
             .expect((res) => {
-              expect(res.body).toBeDefined();
-              expect(res.body).toHaveProperty(
-                'luna',
-                supplyTotalResponse.result.supply[0].amount,
-              );
-            });
+              expect(res.body).toBeDefined()
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+            })
 
-          await app.close();
-        });
+          await app.close()
+        })
 
         it('should work properly when useFactory returns Promise', async () => {
-          nock(MAINNET_LCD_BASE_URL)
-            .get('/bank/total')
-            .reply(200, supplyTotalResponse);
+          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total();
-              const uLuna: Coin | undefined = total.get('uluna');
+              const total: Coins = await this.terraClient.supply.total()
+              const uLuna: Coin | undefined = total.get('uluna')
 
-              return { luna: uLuna?.amount?.toString() ?? '0' };
+              return { luna: uLuna?.amount?.toString() ?? '0' }
             }
           }
 
           @Injectable()
           class ConfigService {
-            public readonly URL = MAINNET_LCD_BASE_URL;
-            public readonly chainID = TESTNET_LCD_BASE_URL;
+            public readonly URL = MAINNET_LCD_BASE_URL
+            public readonly chainID = TESTNET_LCD_BASE_URL
           }
 
           @Module({
@@ -330,12 +290,12 @@ describe('Terra Module Initialization', () => {
                 imports: [ConfigModule],
                 inject: [ConfigService],
                 useFactory: async (config: ConfigService) => {
-                  await new Promise((r) => setTimeout(r, 20));
+                  await new Promise((r) => setTimeout(r, 20))
 
                   return {
                     URL: config.URL,
                     chainID: config.chainID,
-                  };
+                  }
                 },
               }),
             ],
@@ -343,30 +303,23 @@ describe('Terra Module Initialization', () => {
           })
           class TestModule {}
 
-          const app = await NestFactory.create(
-            TestModule,
-            new PlatformAdapter(),
-            { logger: false },
-          );
-          const server = app.getHttpServer();
+          const app = await NestFactory.create(TestModule, new PlatformAdapter(), { logger: false })
+          const server = app.getHttpServer()
 
-          await app.init();
-          await extraWait(PlatformAdapter, app);
+          await app.init()
+          await extraWait(PlatformAdapter, app)
 
           await request(server)
             .get('/')
             .expect(200)
             .expect((res) => {
-              expect(res.body).toBeDefined();
-              expect(res.body).toHaveProperty(
-                'luna',
-                supplyTotalResponse.result.supply[0].amount,
-              );
-            });
+              expect(res.body).toBeDefined()
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+            })
 
-          await app.close();
-        });
-      });
-    });
+          await app.close()
+        })
+      })
+    })
   }
-});
+})

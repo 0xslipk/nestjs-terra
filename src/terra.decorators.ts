@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
-import { getTerraToken } from './terra.utils';
+import { Inject } from '@nestjs/common'
+import { getTerraToken } from './terra.utils'
 
-export const InjectTerraLCDClient = () => Inject(getTerraToken());
+export const InjectLCDClient = () => Inject(getTerraToken())

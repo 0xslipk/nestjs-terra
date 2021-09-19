@@ -1,5 +1,5 @@
-import { DECORATED_PREFIX } from './terra.constants';
+import { DECORATED_PREFIX } from './terra.constants'
 
 export function getTerraToken(): string {
-  return `${DECORATED_PREFIX}:LCDClient`;
+  return `${DECORATED_PREFIX}:LCDClient`
 }

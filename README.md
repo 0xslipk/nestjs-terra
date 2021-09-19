@@ -155,18 +155,18 @@ class ConfigService {
 class MyModule {}
 ```
 
-## TerraLCDClient
+## LCDClient
 
-`TerraLCDClient` implements standard [LCDClient](https://github.com/terra-project/terra.js/wiki/Making-a-connection). So if you are familiar with it, you are ready to go.
+if you are familiar with [LCDClient](https://github.com/terra-project/terra.js/wiki/Making-a-connection), you are ready to go.
 
 ```ts
-import { InjectTerraLCDClient, TerraLCDClient, MnemonicKey } from 'nestjs-terra';
+import { InjectLCDClient, LCDClient, MnemonicKey } from 'nestjs-terra';
 
 @Injectable()
 export class TestService {
   constructor(
-    @InjectTerraLCDClient()
-    private readonly terraClient: TerraLCDClient,
+    @InjectLCDClient()
+    private readonly terraClient: LCDClient,
   ) {}
   async someMethod(): Promise<{ accountNumber: string }> {
     const wallet = this.terraClient.wallet(
@@ -206,10 +206,10 @@ export class TestService {
 }
 ```
 
-## Testing a class that uses @InjectTerraLCDClient
+## Testing a class that uses @InjectLCDClient
 
 This package exposes a getTerraToken() function that returns a prepared injection token based on the provided context. 
-Using this token, you can easily provide a mock implementation of the `TerraLCDClient` using any of the standard custom provider techniques, including useClass, useValue, and useFactory.
+Using this token, you can easily provide a mock implementation of the `LCDClient` using any of the standard custom provider techniques, including useClass, useValue, and useFactory.
 
 ```ts
   const module: TestingModule = await Test.createTestingModule({
