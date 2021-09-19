@@ -2,19 +2,12 @@ import { Module, Controller, Get, Injectable } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import * as nock from 'nock'
 import * as request from 'supertest'
-import {
-  TerraModule,
-  TERRA_LCD_BASE_URL,
-  TERRA_TESTNET_CHAIN_ID,
-  InjectTerraLCDClient,
-  TerraLCDClient,
-  Coin,
-} from '../src'
+import { TerraModule, TERRA_LCD_BASE_URL, TERRA_TESTNET_CHAIN_ID, InjectLCDClient, LCDClient, Coin } from '../src'
 import { treasuryTaxCapUlunaResponse, treasuryTaxRateResponse } from './responses'
 import { extraWait } from './utils/extraWait'
 import { platforms } from './utils/platforms'
 
-describe('InjectTerraLCDClient', () => {
+describe('InjectLCDClient', () => {
   beforeEach(() => nock.cleanAll())
 
   beforeAll(() => {
@@ -44,8 +37,8 @@ describe('InjectTerraLCDClient', () => {
         @Injectable()
         class TestService {
           constructor(
-            @InjectTerraLCDClient()
-            private readonly terraClient: TerraLCDClient,
+            @InjectLCDClient()
+            private readonly terraClient: LCDClient,
           ) {}
           async someMethod(): Promise<{ tax: string }> {
             const coin = new Coin('uluna', 200)
@@ -105,8 +98,8 @@ describe('InjectTerraLCDClient', () => {
         @Controller('/')
         class TestController {
           constructor(
-            @InjectTerraLCDClient()
-            private readonly terraClient: TerraLCDClient,
+            @InjectLCDClient()
+            private readonly terraClient: LCDClient,
           ) {}
           @Get()
           async get() {

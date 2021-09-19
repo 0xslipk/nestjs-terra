@@ -7,8 +7,8 @@ import {
   TerraModule,
   TERRA_LCD_BASE_URL,
   TERRA_TESTNET_CHAIN_ID,
-  InjectTerraLCDClient,
-  TerraLCDClient,
+  InjectLCDClient,
+  LCDClient,
   Coins,
   Coin,
   MnemonicKey,
@@ -44,8 +44,8 @@ describe('Terra Module Initialization', () => {
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
@@ -90,8 +90,8 @@ describe('Terra Module Initialization', () => {
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ accountNumber: string }> {
@@ -138,8 +138,8 @@ describe('Terra Module Initialization', () => {
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
@@ -202,8 +202,8 @@ describe('Terra Module Initialization', () => {
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
@@ -260,8 +260,8 @@ describe('Terra Module Initialization', () => {
           @Controller('/')
           class TestController {
             constructor(
-              @InjectTerraLCDClient()
-              private readonly terraClient: TerraLCDClient,
+              @InjectLCDClient()
+              private readonly terraClient: LCDClient,
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
