@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0
+## 1.0.0
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
 - [#89](https://github.com/jarcodallo/nestjs-terra/pull/89) Terrajs columbus-5 compatibility
 
@@ -11,7 +11,7 @@ Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
 - Renamed constant from `TERRA_MAINNET_CHAIN_ID` to `MAINNET_CHAIN_ID`.
 - Renamed constant from `TERRA_TESTNET_CHAIN_ID` to `MAINNET_CHAIN_ID`.
 
-## 0.1.5
+## 0.2.1
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/09/19**
 - [#96](https://github.com/jarcodallo/nestjs-terra/pull/96) Export everything in terrajs
 - [#95](https://github.com/jarcodallo/nestjs-terra/pull/95) Update lint config
