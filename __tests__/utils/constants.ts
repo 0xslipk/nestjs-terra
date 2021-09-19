@@ -1,4 +1,4 @@
-export const TERRA_ADDRESS = 'terra1dcegyrekltswvyy0xy69ydgxn9x8x32zdtapd8';
+export const TERRA_ADDRESS = 'terra1dcegyrekltswvyy0xy69ydgxn9x8x32zdtapd8'
 export const TERRA_MNEMONIC = [
   'satisfy',
   'adjust',
@@ -24,4 +24,4 @@ export const TERRA_MNEMONIC = [
   'rent',
   'enjoy',
   'dawn',
-].join(' ');
+].join(' ')
