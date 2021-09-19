@@ -1,6 +1,16 @@
 # Changelog
 
 ## 0.1.5
+Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/09/19**
+- [#96](https://github.com/jarcodallo/nestjs-terra/pull/96) Export everything in terrajs
+- [#95](https://github.com/jarcodallo/nestjs-terra/pull/95) Update lint config
+- [#86](https://github.com/jarcodallo/nestjs-terra/pull/86) Remove Dependabot Badge
+
+### BREAKING CHANGE
+- Replace `TerraLCDClient` with terrajs `LCDClient` interface.
+- Replace `InjectTerraLCDClient` with `InjectLCDClient` decorator.
+
+## 0.1.5
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
 - [#85](https://github.com/jarcodallo/nestjs-terra/pull/85) Update terra.js dependency
 
