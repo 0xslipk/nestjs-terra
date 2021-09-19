@@ -1,9 +1,11 @@
 {
   "height": "2679702",
-  "result": [
-    {
-      "denom": "uluna",
-      "amount": "1000000"
-    }
-  ]
+  "result": {
+    "supply": [
+      {
+        "denom": "uluna",
+        "amount": "1000000"
+      }
+    ]
+  }
 }

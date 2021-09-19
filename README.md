@@ -33,8 +33,9 @@ interface TerraModuleOptions {
   /**
    * Chain ID of the blockchain to connect to.
    * For example:
-   *  - columbus-4: Mainnet
+   *  - columbus-5: Mainnet
    *  - tequila-0004: Testnet
+   *  - bombay-9: Testnet
    */
   chainID: string;
 
@@ -57,15 +58,15 @@ Use `TerraModule.forRoot` method with [Options interface](#configuration-params)
 ```ts
 import {
   TerraModule,
-  TERRA_LCD_BASE_URL,
-  TERRA_MAINNET_CHAIN_ID
+  MAINNET_LCD_BASE_URL,
+  MAINNET_CHAIN_ID
 } from 'nestjs-terra';
 
 @Module({
   imports: [
     TerraModule.forRoot({
-      URL: TERRA_LCD_BASE_URL,
-      chainID: TERRA_MAINNET_CHAIN_ID,
+      URL: MAINNET_LCD_BASE_URL,
+      chainID: MAINNET_CHAIN_ID,
     })
   ],
   ...
@@ -84,14 +85,14 @@ Here's an example:
 ```ts
 import {
   TerraModule,
-  TERRA_LCD_BASE_URL,
-  TERRA_MAINNET_CHAIN_ID
+  MAINNET_LCD_BASE_URL,
+  MAINNET_CHAIN_ID
 } from 'nestjs-terra';
 
 @Injectable()
 class ConfigService {
-  public readonly URL = TERRA_LCD_BASE_URL;
-  public readonly chainID = TERRA_MAINNET_CHAIN_ID;
+  public readonly URL = MAINNET_LCD_BASE_URL;
+  public readonly chainID = MAINNET_CHAIN_ID;
 }
 
 @Module({
@@ -124,14 +125,14 @@ Or you can just pass `ConfigService` to `providers`, if you don't have any `Conf
 ```ts
 import {
   TerraModule,
-  TERRA_LCD_BASE_URL,
-  TERRA_MAINNET_CHAIN_ID,
+  MAINNET_LCD_BASE_URL,
+  MAINNET_CHAIN_ID,
 } from 'nestjs-terra';
 
 @Injectable()
 class ConfigService {
-  public readonly URL = TERRA_LCD_BASE_URL;
-  public readonly chainID = TERRA_MAINNET_CHAIN_ID;
+  public readonly URL = MAINNET_LCD_BASE_URL;
+  public readonly chainID = MAINNET_CHAIN_ID;
 }
 
 @Module({

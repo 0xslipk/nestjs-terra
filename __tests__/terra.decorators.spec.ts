@@ -2,7 +2,7 @@ import { Module, Controller, Get, Injectable } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import * as nock from 'nock'
 import * as request from 'supertest'
-import { TerraModule, TERRA_LCD_BASE_URL, TERRA_TESTNET_CHAIN_ID, InjectLCDClient, LCDClient, Coin } from '../src'
+import { TerraModule, MAINNET_LCD_BASE_URL, TESTNET_LCD_BASE_URL, InjectLCDClient, LCDClient, Coin } from '../src'
 import { treasuryTaxCapUlunaResponse, treasuryTaxRateResponse } from './responses'
 import { extraWait } from './utils/extraWait'
 import { platforms } from './utils/platforms'
@@ -26,7 +26,7 @@ describe('InjectLCDClient', () => {
   for (const PlatformAdapter of platforms) {
     describe(PlatformAdapter.name, () => {
       it('should inject terra LCD client in a service successfully', async () => {
-        nock(TERRA_LCD_BASE_URL)
+        nock(MAINNET_LCD_BASE_URL)
           .get('/treasury/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
@@ -60,8 +60,8 @@ describe('InjectLCDClient', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: TERRA_LCD_BASE_URL,
-              chainID: TERRA_TESTNET_CHAIN_ID,
+              URL: MAINNET_LCD_BASE_URL,
+              chainID: TESTNET_LCD_BASE_URL,
             }),
           ],
           controllers: [TestController],
@@ -87,7 +87,7 @@ describe('InjectLCDClient', () => {
       })
 
       it('should inject terra LCD client in a controller successfully', async () => {
-        nock(TERRA_LCD_BASE_URL)
+        nock(MAINNET_LCD_BASE_URL)
           .get('/treasury/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
@@ -113,8 +113,8 @@ describe('InjectLCDClient', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: TERRA_LCD_BASE_URL,
-              chainID: TERRA_TESTNET_CHAIN_ID,
+              URL: MAINNET_LCD_BASE_URL,
+              chainID: TESTNET_LCD_BASE_URL,
             }),
           ],
           controllers: [TestController],
