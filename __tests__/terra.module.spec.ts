@@ -9,7 +9,6 @@ import {
   TESTNET_LCD_BASE_URL,
   InjectLCDClient,
   LCDClient,
-  Coins,
   Coin,
   MnemonicKey,
 } from '../src'
@@ -49,7 +48,7 @@ describe('Terra Module Initialization', () => {
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total()
+              const [total] = await this.terraClient.bank.total()
               const uLuna: Coin | undefined = total.get('uluna')
 
               return { luna: uLuna?.amount?.toString() ?? '0' }
@@ -78,14 +77,16 @@ describe('Terra Module Initialization', () => {
             .expect(200)
             .expect((res) => {
               expect(res.body).toBeDefined()
-              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.supply[0].amount)
             })
 
           await app.close()
         })
 
         it('should work with a wallet key', async () => {
-          nock(MAINNET_LCD_BASE_URL).get(`/auth/accounts/${TERRA_ADDRESS}`).reply(200, authAccounteResponse)
+          nock(MAINNET_LCD_BASE_URL)
+            .get(`/cosmos/auth/v1beta1/accounts/${TERRA_ADDRESS}`)
+            .reply(200, authAccounteResponse)
 
           @Controller('/')
           class TestController {
@@ -124,7 +125,7 @@ describe('Terra Module Initialization', () => {
             .expect(200)
             .expect((res) => {
               expect(res.body).toBeDefined()
-              expect(res.body).toHaveProperty('accountNumber', authAccounteResponse.result.value.account_number)
+              expect(res.body).toHaveProperty('accountNumber', authAccounteResponse.account.account_number)
             })
 
           await app.close()
@@ -143,7 +144,7 @@ describe('Terra Module Initialization', () => {
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total()
+              const [total] = await this.terraClient.bank.total()
               const uLuna: Coin | undefined = total.get('uluna')
 
               return { luna: uLuna?.amount?.toString() ?? '0' }
@@ -190,7 +191,7 @@ describe('Terra Module Initialization', () => {
             .expect(200)
             .expect((res) => {
               expect(res.body).toBeDefined()
-              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.supply[0].amount)
             })
 
           await app.close()
@@ -207,7 +208,7 @@ describe('Terra Module Initialization', () => {
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total()
+              const [total] = await this.terraClient.bank.total()
               const uLuna: Coin | undefined = total.get('uluna')
 
               return { luna: uLuna?.amount?.toString() ?? '0' }
@@ -248,7 +249,7 @@ describe('Terra Module Initialization', () => {
             .expect(200)
             .expect((res) => {
               expect(res.body).toBeDefined()
-              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.supply[0].amount)
             })
 
           await app.close()
@@ -265,7 +266,7 @@ describe('Terra Module Initialization', () => {
             ) {}
             @Get()
             async get(): Promise<{ luna: string }> {
-              const total: Coins = await this.terraClient.supply.total()
+              const [total] = await this.terraClient.bank.total()
               const uLuna: Coin | undefined = total.get('uluna')
 
               return { luna: uLuna?.amount?.toString() ?? '0' }
@@ -314,7 +315,7 @@ describe('Terra Module Initialization', () => {
             .expect(200)
             .expect((res) => {
               expect(res.body).toBeDefined()
-              expect(res.body).toHaveProperty('luna', supplyTotalResponse.result.supply[0].amount)
+              expect(res.body).toHaveProperty('luna', supplyTotalResponse.supply[0].amount)
             })
 
           await app.close()

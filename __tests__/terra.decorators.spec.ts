@@ -2,7 +2,7 @@ import { Module, Controller, Get, Injectable } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import * as nock from 'nock'
 import * as request from 'supertest'
-import { TerraModule, MAINNET_LCD_BASE_URL, TESTNET_LCD_BASE_URL, InjectLCDClient, LCDClient, Coin } from '../src'
+import { TerraModule, TESTNET_LCD_BASE_URL, TESTNET_CHAIN_ID, InjectLCDClient, LCDClient, Coin } from '../src'
 import { treasuryTaxCapUlunaResponse, treasuryTaxRateResponse } from './responses'
 import { extraWait } from './utils/extraWait'
 import { platforms } from './utils/platforms'
@@ -26,11 +26,11 @@ describe('InjectLCDClient', () => {
   for (const PlatformAdapter of platforms) {
     describe(PlatformAdapter.name, () => {
       it('should inject terra LCD client in a service successfully', async () => {
-        nock(MAINNET_LCD_BASE_URL)
-          .get('/treasury/tax_rate')
+        nock(TESTNET_LCD_BASE_URL)
+          .get('/terra/treasury/v1beta1/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
-          .get('/treasury/tax_cap/uluna')
+          .get('/terra/treasury/v1beta1/tax_caps/uluna')
           .twice()
           .reply(200, treasuryTaxCapUlunaResponse)
 
@@ -43,6 +43,7 @@ describe('InjectLCDClient', () => {
           async someMethod(): Promise<{ tax: string }> {
             const coin = new Coin('uluna', 200)
             const tax = await this.terraClient.utils.calculateTax(coin)
+            console.log('tax ========>', tax)
 
             return { tax: tax?.amount?.toString() ?? '0' }
           }
@@ -60,8 +61,8 @@ describe('InjectLCDClient', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: MAINNET_LCD_BASE_URL,
-              chainID: TESTNET_LCD_BASE_URL,
+              URL: TESTNET_LCD_BASE_URL,
+              chainID: TESTNET_CHAIN_ID,
             }),
           ],
           controllers: [TestController],
@@ -80,18 +81,18 @@ describe('InjectLCDClient', () => {
           .expect(200)
           .expect((res) => {
             expect(res.body).toBeDefined()
-            expect(res.body).toHaveProperty('tax', treasuryTaxCapUlunaResponse.result)
+            expect(res.body).toHaveProperty('tax', '40')
           })
 
         await app.close()
       })
 
       it('should inject terra LCD client in a controller successfully', async () => {
-        nock(MAINNET_LCD_BASE_URL)
-          .get('/treasury/tax_rate')
+        nock(TESTNET_LCD_BASE_URL)
+          .get('/terra/treasury/v1beta1/tax_rate')
           .twice()
           .reply(200, treasuryTaxRateResponse)
-          .get('/treasury/tax_cap/uluna')
+          .get('/terra/treasury/v1beta1/tax_caps/uluna')
           .twice()
           .reply(200, treasuryTaxCapUlunaResponse)
 
@@ -113,8 +114,8 @@ describe('InjectLCDClient', () => {
         @Module({
           imports: [
             TerraModule.forRoot({
-              URL: MAINNET_LCD_BASE_URL,
-              chainID: TESTNET_LCD_BASE_URL,
+              URL: TESTNET_LCD_BASE_URL,
+              chainID: TESTNET_CHAIN_ID,
             }),
           ],
           controllers: [TestController],
@@ -131,7 +132,7 @@ describe('InjectLCDClient', () => {
           .expect(200)
           .expect((res) => {
             expect(res.body).toBeDefined()
-            expect(res.body).toHaveProperty('tax', treasuryTaxCapUlunaResponse.result)
+            expect(res.body).toHaveProperty('tax', '40')
           })
 
         await app.close()
