@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/10/06**
+- Update dependencies
+
 ## 1.0.0
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/08/11**
 - [#89](https://github.com/jarcodallo/nestjs-terra/pull/89) Terrajs columbus-5 compatibility
