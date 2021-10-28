@@ -1,6 +1,6 @@
 {
   "name": "nestjs-terra",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Terra blockchain utilities for NestJS based on terra.js",
   "author": "Jose Ramirez <jarcodallo@gmail.com>",
   "license": "Apache",
@@ -46,7 +46,7 @@
   "homepage": "https://github.com/jarcodallo/nestjs-terra/blob/main/README.md",
   "bugs": "https://github.com/jarcodallo/nestjs-terra/issues",
   "dependencies": {
-    "@terra-money/terra.js": "^2.0.x"
+    "@terra-money/terra.js": "^2.1.x"
   },
   "devDependencies": {
     "@nestjs/common": "^8.1.2",
