@@ -38,7 +38,7 @@ describe('Terra Module Initialization', () => {
     describe(PlatformAdapter.name, () => {
       describe('forRoot', () => {
         it('should work with terra testnet client', async () => {
-          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
+          nock(MAINNET_LCD_BASE_URL).get('/cosmos/bank/v1beta1/supply').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
@@ -134,7 +134,7 @@ describe('Terra Module Initialization', () => {
 
       describe('forRootAsync', () => {
         it('should compile properly with useFactory', async () => {
-          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
+          nock(MAINNET_LCD_BASE_URL).get('/cosmos/bank/v1beta1/supply').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
@@ -198,7 +198,7 @@ describe('Terra Module Initialization', () => {
         })
 
         it('should work properly when pass dependencies via providers', async () => {
-          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
+          nock(MAINNET_LCD_BASE_URL).get('/cosmos/bank/v1beta1/supply').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
@@ -256,7 +256,7 @@ describe('Terra Module Initialization', () => {
         })
 
         it('should work properly when useFactory returns Promise', async () => {
-          nock(MAINNET_LCD_BASE_URL).get('/bank/total').reply(200, supplyTotalResponse)
+          nock(MAINNET_LCD_BASE_URL).get('/cosmos/bank/v1beta1/supply').reply(200, supplyTotalResponse)
 
           @Controller('/')
           class TestController {
