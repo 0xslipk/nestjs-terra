@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/11/29**
+- [#99](https://github.com/jarcodallo/nestjs-terra/pull/99) Use terra.js v3
+
 ## 1.1.0
 Published by **[jarcodallo](https://github.com/jarcodallo)** on **2021/10/28**
 - [#98](https://github.com/jarcodallo/nestjs-terra/pull/98) Use columbus-5 new endpoints

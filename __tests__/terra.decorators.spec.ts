@@ -43,7 +43,6 @@ describe('InjectLCDClient', () => {
           async someMethod(): Promise<{ tax: string }> {
             const coin = new Coin('uluna', 200)
             const tax = await this.terraClient.utils.calculateTax(coin)
-            console.log('tax ========>', tax)
 
             return { tax: tax?.amount?.toString() ?? '0' }
           }
